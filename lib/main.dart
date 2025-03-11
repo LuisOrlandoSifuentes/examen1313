@@ -1,42 +1,92 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Examen());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
+class Examen extends StatelessWidget {
+  const Examen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        // useMaterial3: false,
-        primarySwatch: Colors.blue,
-      ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
+      home: UserListScreen(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});  
+class UserListScreen extends StatelessWidget {
+  final List<Map<String, String>> users = [
+    {"name": "Junaid Durrani", "role": "Programmer"},
+    {"name": "Ahmed Khan", "role": "Data Scientist"},
+    {"name": "Aqib", "role": "Project Manager"},
+    {"name": "Zaid", "role": "Team Leader"},
+    {"name": "Saqib", "role": "Developer"},
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[100],
       appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
+        title: Text("ListViews Sifuentes1313"),
+        backgroundColor: Colors.green,
+        centerTitle: true,
       ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.all(10),
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color:
+                            Colors.grey.withOpacity(0.5), // Sombra en el borde
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      leading: CircleAvatar(
+                        backgroundImage: AssetImage('assets/profile.png'),
+                      ),
+                      title: Text(
+                        users[index]['name']!,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(users[index]['role']!),
+                      trailing: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.pinkAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text("Invite"),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
